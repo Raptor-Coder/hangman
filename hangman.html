@@ -87,3 +87,47 @@
     color: #4a4a4a;
     font-weight: bold;
   }
+.custom-word-section {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ccc;
+  }
+</style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>Hangman</h1>
+    <svg id="hangman-drawing" viewBox="0 0 100 125">
+      <line x1="10" y1="120" x2="90" y2="120" stroke="#333" stroke-width="2" />
+      <line x1="30" y1="120" x2="30" y2="10" stroke="#333" stroke-width="2" />
+      <line x1="30" y1="10" x2="70" y2="10" stroke="#333" stroke-width="2" />
+      <line x1="70" y1="10" x2="70" y2="30" stroke="#333" stroke-width="2" />
+      <circle id="head" cx="70" cy="40" r="10" fill="none" stroke="#333" stroke-width="2" visibility="hidden" />
+      <line id="body" x1="70" y1="50" x2="70" y2="80" stroke="#333" stroke-width="2" visibility="hidden" />
+      <line id="left-arm" x1="70" y1="60" x2="60" y2="70" stroke="#333" stroke-width="2" visibility="hidden" />
+      <line id="right-arm" x1="70" y1="60" x2="80" y2="70" stroke="#333" stroke-width="2" visibility="hidden" />
+      <line id="left-leg" x1="70" y1="80" x2="60" y2="100" stroke="#333" stroke-width="2" visibility="hidden" />
+      <line id="right-leg" x1="70" y1="80" x2="80" y2="100" stroke="#333" stroke-width="2" visibility="hidden" />
+    </svg>
+    <div id="word-display"></div>
+    <input type="text" id="guess-input" maxlength="1">
+    <button id="guess-button" class="button">Guess</button>
+    <button id="restart-button" class="button">Restart</button>
+    <div id="message"></div>
+    <div id="used-letters"></div>
+    <div id="win-streak">Win Streak: 0</div>
+
+    <div class="custom-word-section">
+      <h2>Add Custom Word</h2>
+      <input type="text" id="custom-word-input" placeholder="Enter a word">
+      <button id="add-word-button" class="button">Add Word</button>
+    </div>
+  </div>
+
+  <script>
+    let words = ['PYTHON', 'JAVASCRIPT', 'PROGRAMMING', 'COMPUTER', 'DEVELOPER', 'ALGORITHM', 'WEBSITE', 'DATABASE', 'NETWORK', 'INTERFACE'];
+    let selectedWord = '';
+    let guessedWord = [];
+    let wrongGuesses = 0;
+    let usedLetters = new Set();
+    let winStreak = 0;
