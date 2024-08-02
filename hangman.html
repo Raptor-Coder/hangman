@@ -171,3 +171,38 @@
       if (usedLetters.has(guess)) {
         message.textContent = 'You already guessed that letter.';
         return;
+}
+      usedLetters.add(guess);
+      if (selectedWord.includes(guess)) {
+        for (let i = 0; i < selectedWord.length; i++) {
+          if (selectedWord[i] === guess) {
+            guessedWord[i] = guess;
+          }
+        }
+        message.textContent = 'Good guess!';
+      } else {
+        wrongGuesses++;
+        if (wrongGuesses <= hangmanParts.length) {
+          document.getElementById(hangmanParts[wrongGuesses - 1]).setAttribute('visibility', 'visible');
+        }
+        message.textContent = 'Wrong guess!';
+      }
+      updateDisplay();
+      guessInput.value = '';
+      guessInput.focus();
+      checkGameEnd();
+    }
+
+    function checkGameEnd() {
+      if (guessedWord.join('') === selectedWord) {
+        message.textContent = 'Congratulations! You won!';
+        guessButton.disabled = true;
+        winStreak++;
+        updateDisplay();
+      } else if (wrongGuesses === hangmanParts.length) {
+        message.textContent = `Game over! The word was ${selectedWord}.`;
+        guessButton.disabled = true;
+        winStreak = 0;
+        updateDisplay();
+      }
+    }
