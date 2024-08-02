@@ -131,3 +131,43 @@
     let wrongGuesses = 0;
     let usedLetters = new Set();
     let winStreak = 0;
+
+    const wordDisplay = document.getElementById('word-display');
+    const guessInput = document.getElementById('guess-input');
+    const guessButton = document.getElementById('guess-button');
+    const restartButton = document.getElementById('restart-button');
+    const message = document.getElementById('message');
+    const usedLettersDisplay = document.getElementById('used-letters');
+    const winStreakDisplay = document.getElementById('win-streak');
+    const customWordInput = document.getElementById('custom-word-input');
+    const addWordButton = document.getElementById('add-word-button');
+    const hangmanParts = ['head', 'body', 'left-arm', 'right-arm', 'left-leg', 'right-leg'];
+
+    function initGame() {
+      selectedWord = words[Math.floor(Math.random() * words.length)];
+      guessedWord = Array(selectedWord.length).fill('_');
+      wrongGuesses = 0;
+      usedLetters.clear();
+      updateDisplay();
+      message.textContent = '';
+      guessInput.value = '';
+      guessInput.focus();
+      guessButton.disabled = false;
+      hangmanParts.forEach(part => document.getElementById(part).setAttribute('visibility', 'hidden'));
+    }
+
+    function updateDisplay() {
+      wordDisplay.textContent = guessedWord.join(' ');
+      usedLettersDisplay.textContent = `Used letters: ${Array.from(usedLetters).join(', ')}`;
+      winStreakDisplay.textContent = `Win Streak: ${winStreak}`;
+    }
+
+    function makeGuess() {
+      const guess = guessInput.value.toUpperCase();
+      if (guess.length !== 1 || !/[A-Z]/.test(guess)) {
+        message.textContent = 'Please enter a single letter.';
+        return;
+      }
+      if (usedLetters.has(guess)) {
+        message.textContent = 'You already guessed that letter.';
+        return;
