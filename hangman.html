@@ -206,3 +206,29 @@
         updateDisplay();
       }
     }
+
+    function addCustomWord() {
+      const customWord = customWordInput.value.toUpperCase().trim();
+      if (customWord && /^[A-Z]+$/.test(customWord) && !words.includes(customWord)) {
+        words.push(customWord);
+        message.textContent = `"${customWord}" added to the word list!`;
+        customWordInput.value = '';
+      } else {
+        message.textContent = 'Please enter a valid word (letters only) that is not already in the list.';
+      }
+    }
+
+    guessButton.addEventListener('click', makeGuess);
+    guessInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        makeGuess();
+      }
+    });
+
+    restartButton.addEventListener('click', initGame);
+    addWordButton.addEventListener('click', addCustomWord);
+
+    initGame();
+  </script>
+</body>
+</html>
